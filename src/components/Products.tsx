@@ -4,16 +4,18 @@ import Image from "next/image"
 import { Product } from '@/types/global'
 import { ProductsTitle } from '@/lib/constants'
 import { useSortStore } from '@/store'
+import { useRouter } from "next/navigation"
 
 export default function Products({ data }: { data: Product[] }) {
   const { value } = useSortStore()
+  const router = useRouter()
   const products = [...data]
 
   if(value !== 'latest'){
     products.sort((a,b) => value === 'low' ? a.price - b.price : b.price - a.price)
   }
   const handleClick = (id: number) => {
-    console.log(id)
+    router.push(`/detail/${id}`)
   }
   return (
     <div className="flex-1">
